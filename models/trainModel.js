@@ -13,11 +13,11 @@ const trainSchema = new mongoose.Schema(
     currentLocation: {
       latitude: {
         type: Number,
-        required: true,
+        required: false,
       },
       longitude: {
         type: Number,
-        required: true,
+        required: false,
       },
     },
     currentStation: {

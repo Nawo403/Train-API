@@ -19,12 +19,12 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 // Use train routes
-const trainRoutes = require("./routes/trainRoutes");
-trainAPI.use("/api/trains", trainRoutes);
+const trainRoute = require("./routes/trainRoute");
+trainAPI.use("/api/trains", trainRoute);
 
 // Use station routes
-const stationRoutes = require("./routes/stationRoutes");
-trainAPI.use("/api/stations", stationRoutes);
+const stationRoute = require("./routes/stationRoute");
+trainAPI.use("/api/stations", stationRoute);
 
 trainAPI.get("/", (req, res) => {
   res.status(200).json({ message: "Train API Test" });

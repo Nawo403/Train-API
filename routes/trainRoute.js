@@ -15,5 +15,7 @@ router.post("/", createTrain);
 router.put("/:id", updateTrain);
 router.delete("/:id", deleteTrain);
 
+// New route to simulate train movement
+router.post("/simulate/:trainId", simulateTrainMovement);
 
 module.exports = router;
