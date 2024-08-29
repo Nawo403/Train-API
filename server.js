@@ -1,15 +1,20 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swaggerOptions");
+
 require("dotenv").config();
 
-const trainAPI = express();
-const TRAIN_API_PORT = 8080;
+const app = express();
+const TRAIN_API_PORT = process.env.PORT || 8080;
 const MONGO_URI = process.env.MONGO_URI;
 
-trainAPI.use(cors());
-trainAPI.use(express.json());
+// Middleware setup
+app.use(cors());
+app.use(express.json());
 
+// Connect to MongoDB
 mongoose
   .connect(MONGO_URI, {
     useNewUrlParser: true,
@@ -18,18 +23,23 @@ mongoose
   .then(() => console.log("MongoDB connected successfully"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
+// Swagger Documentation Route
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // Use train routes
-const trainRoute = require("./routes/trainRoute");
-trainAPI.use("/api/trains", trainRoute);
+const trainRoutes = require("./routes/trainRoute");
+app.use("/api/trains", trainRoutes);
 
 // Use station routes
-const stationRoute = require("./routes/stationRoute");
-trainAPI.use("/api/stations", stationRoute);
+const stationRoutes = require("./routes/stationRoute");
+app.use("/api/stations", stationRoutes);
 
-trainAPI.get("/", (req, res) => {
+// Root Route for Testing
+app.get("/", (req, res) => {
   res.status(200).json({ message: "Train API Test" });
 });
 
-trainAPI.listen(TRAIN_API_PORT, () => {
+// Start the server
+app.listen(TRAIN_API_PORT, () => {
   console.log(`Train API is running on port ${TRAIN_API_PORT}`);
 });
