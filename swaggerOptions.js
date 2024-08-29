@@ -10,8 +10,8 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:8080",
-        description: "Local server",
+        url: "train-api-production-7912.up.railway.app",
+        description: "Cloud server",
       },
     ],
     components: {
