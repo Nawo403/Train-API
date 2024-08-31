@@ -110,7 +110,10 @@ exports.simulateTrainMovement = async (req, res) => {
     if (!train) return res.status(404).json({ message: "Train not found" });
 
     // Get all stations on the train's route
-    const stations = await Station.find({ name: train.route }).sort({ _id: 1 });
+    console.log("train : ", train.route);
+
+    // Updated query to find stations by line
+    const stations = await Station.find({ line: train.route }).sort({ _id: 1 });
 
     if (stations.length === 0) {
       return res
